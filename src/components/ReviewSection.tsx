@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Star, Camera, User } from 'lucide-react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Star, User } from 'lucide-react';
 import ReviewForm from './ReviewForm';
 
 interface ReviewSectionProps {
   placeId: string;
 }
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const ReviewSection: React.FC<ReviewSectionProps> = ({ placeId }) => {
   const [showForm, setShowForm] = useState(false);
@@ -15,7 +16,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ placeId }) => {
   const fetchReviews = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:4000/reviews/${placeId}`);
+      const res = await fetch(`${API_URL}/reviews/${placeId}`);
       const data = await res.json();
       setReviews(data);
     } catch (err) {

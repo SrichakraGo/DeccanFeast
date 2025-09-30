@@ -1,26 +1,31 @@
-// server.js
+// index.js
 const express = require('express');
-const cors = require('cors');       // <-- install: npm install cors
+const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(express.json());
-
-// IMPORTANT: Put this before your routes
+// --- CORS Setup ---
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:5173';
 app.use(cors({
-  origin: 'http://localhost:5173',  // allow only your dev origin (safer)
-  credentials: true,                // set true only if you need cookies/auth
-  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization']
+  origin: FRONTEND_ORIGIN,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Optional: ensure preflight handled for all routes
+// Handle preflight
 app.options('*', cors());
 
+// JSON parser
+app.use(express.json());
+
+// Path to reviews file
 const reviewsFile = path.join(__dirname, 'reviews.json');
 
+// --- API Routes ---
 app.get('/reviews', (req, res) => {
   fs.readFile(reviewsFile, 'utf8', (err, data) => {
     if (err) return res.status(500).json({ error: 'Failed to read reviews.' });
@@ -51,6 +56,17 @@ app.post('/reviews', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+// --- Serve frontend build (production only) ---
+const distPath = path.join(__dirname, '..', 'dist');
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
+
+// --- Start server ---
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Reviews server running on port ${PORT}`);
 });
