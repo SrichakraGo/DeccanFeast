@@ -13,7 +13,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
   selectedRating,
   onRatingChange
 }) => {
-  const cuisines = ['All', 'Mexican', 'Asian', 'American', 'Indian', 'Italian'];
+  const cuisines = ['All', 'Hyderabadi', 'North Indian', 'South Indian', 'Street Food', 'Andhra'];
   const ratings = [0, 3, 4, 4.5];
 
   return (

@@ -21,13 +21,13 @@ const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center space-x-3">
             {/* Logo placeholder */}
             <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-              {<img src="/src/images/logo.png" alt="Deccan Feast Logo" className="w-8 h-8" />}
+              {<img src="/images/logo.png" alt="Deccan Feast Logo" className="w-8 h-8" />}
             </div>
             <h1 className="text-2xl font-bold text-gray-800">Deccan Feast</h1>
           </div>
           <div className="flex items-center space-x-2">
             <MapPin className="w-5 h-5 text-gray-600" />
-            <span className="text-sm text-gray-600">Downtown Area</span>
+            <span className="text-sm text-gray-600">Hyderabad</span>
           </div>
         </div>
         
