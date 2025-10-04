@@ -1,6 +1,7 @@
 import React from 'react';
-import { Star, MapPin, Clock, Heart, Phone } from 'lucide-react';
+import { Star, MapPin, Clock, Heart, Phone, ShoppingCart } from 'lucide-react';
 import { Place } from '../types';
+import { useCart } from '../context/cartContext'; // import cart context
 
 interface PlaceCardProps {
   place: Place;
@@ -9,6 +10,8 @@ interface PlaceCardProps {
 }
 
 const PlaceCard: React.FC<PlaceCardProps> = ({ place, onClick, onToggleFavorite }) => {
+  const { addToCart } = useCart(); // use addToCart from context
+
   return (
     <div 
       className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden transform hover:-translate-y-1"
@@ -61,7 +64,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ place, onClick, onToggleFavorite 
           </div>
         </div>
         
-        <div className="flex items-center justify-between text-sm text-gray-600">
+        <div className="flex items-center justify-between text-sm text-gray-600 mb-3">
           <div className="flex items-center space-x-1">
             <Clock className="w-4 h-4" />
             <span>{place.hours}</span>

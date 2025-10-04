@@ -3,6 +3,13 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const authRoutes = require("./authRoutes");
+const dotenv = require("dotenv");
+const cartRoutes = require("./cartRoutes");
+const paymentRoutes = require("./PaymentRoutes");
+
+
+dotenv.config(); // <-- load .env
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -16,11 +23,17 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Handle preflight
 app.options('*', cors());
 
 // JSON parser
 app.use(express.json());
+
+// --- Auth routes ---
+app.use("/auth", authRoutes);
+
+app.use("/cart", cartRoutes);
+
+app.use("/payment",paymentRoutes)
 
 // Path to reviews file
 const reviewsFile = path.join(__dirname, 'reviews.json');
@@ -56,17 +69,7 @@ app.post('/reviews', (req, res) => {
   });
 });
 
-// --- Serve frontend build (production only) ---
-const distPath = path.join(__dirname, '..', 'dist');
-if (fs.existsSync(distPath)) {
-  app.use(express.static(distPath));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(distPath, 'index.html'));
-  });
-}
-
 // --- Start server ---
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Reviews server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
