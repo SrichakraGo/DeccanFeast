@@ -3,7 +3,7 @@ import { Place, MenuItem, Review, Menu } from '../types';
 export const mockPlaces: Place[] = [
   {
     id: '20',
-    name: 'Paradise (Secunderabad, Hitec City)',
+    name: 'Paradise - VEG',
     cuisine: 'Hyderabadi',
     rating: 4.5,
     reviewCount: 400,
@@ -12,7 +12,7 @@ export const mockPlaces: Place[] = [
     address: 'Secunderabad, Hitec City',
     phone: 'N/A',
     hours: '11 AM - 11 PM',
-    description: 'Famous for Hyderabadi Veg Biryani, Mirchi ka Salan, Double Ka Meetha, Qubani ka Meetha, Veg Haleem.',
+    description: 'Famous for Hyderabadi Veg Biryani, Veg Haleem.',
     priceRange: 'Rs. 200',
     isFavorite: false
   },
@@ -683,7 +683,24 @@ export const mockMenus: Menu[] = [
       { id: '21', name: 'Puri', description: '', price: 35, category: 'Breakfast', image: '/images/puri.jpg' },
       { id: '22', name: 'Mysore Bonda', description: '', price: 30, category: 'Breakfast', image: '/images/bonda.jpg' }
     ]
-  }
+  },
+  {
+  placeId: '18', // Ram ki Bandi
+  categories: ['Breakfast'],
+  items: [
+    { id: '57', name: 'Masala Dosa', description: '', price: 60, category: 'Breakfast', image: '/images/masaladosa.jpg' },
+    { id: '58', name: 'Teenmar Dosa', description: '', price: 70, category: 'Breakfast', image: '/images/teenmaar.jpg' }
+  ]
+},
+{
+  placeId: '19', // Krishna Idli & Dosa
+  categories: ['Breakfast'],
+  items: [
+    { id: '59', name: 'Ghee Idly', description: '', price: 50, category: 'Breakfast', image: '/images/gheeidly.jpg' },
+    { id: '60', name: 'Upma Dosa', description: '', price: 60, category: 'Breakfast', image: '/images/upmadosa.jpg' }
+  ]
+}
+
 ];
 
 export const mockReviews: Review[] = [
@@ -712,4 +729,5 @@ export const mockReviews: Review[] = [
     comment: 'Best noodles in the city! Fresh, flavorful, and generous portions. Highly recommend!',
     date: '2024-01-12'
   }
+  
 ];

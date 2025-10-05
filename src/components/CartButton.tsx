@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ShoppingCart, X, Trash2 } from "lucide-react";
 import axios from "axios";
 import { useAuth } from "../context/authContext";
+import { useNavigate } from "react-router-dom";
 
 interface CartItem {
   id: string;
@@ -47,6 +48,7 @@ const CartButton: React.FC = () => {
   };
 
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -98,12 +100,16 @@ const CartButton: React.FC = () => {
                   <span>₹{total.toFixed(2)}</span>
                 </div>
 
+                
                 <button
                   className="w-full mt-4 bg-green-600 text-white py-2 rounded hover:bg-green-700 transition-all"
-                  onClick={() => alert("Proceed to payment")}
-                >
+                  onClick={() => {
+                  setIsOpen(false); // close the side cart
+                  navigate("/checkout"); // redirect to checkout page
+                }}>
                   Checkout
                 </button>
+
               </div>
             )}
           </div>

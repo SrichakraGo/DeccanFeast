@@ -1,8 +1,9 @@
+// src/context/cartContext.tsx
 import { createContext, useContext, useState, ReactNode } from "react";
 
 // Define the CartItem type (menu item in cart)
 export interface CartItem {
-  id: string;
+  id: string;       // server-assigned id or menu id if client-only
   placeId: string;
   name: string;
   price: number;
@@ -14,6 +15,7 @@ interface CartContextType {
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
+  replaceCart: (items: CartItem[]) => void; // allow replacing client cart from server
 }
 
 const CartContext = createContext<CartContextType>({
@@ -21,13 +23,13 @@ const CartContext = createContext<CartContextType>({
   addToCart: () => {},
   removeFromCart: () => {},
   clearCart: () => {},
+  replaceCart: () => {},
 });
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   const addToCart = (item: CartItem) => {
-    // If item already in cart, increase quantity
     setCart((prev) => {
       const existing = prev.find((i) => i.id === item.id);
       if (existing) {
@@ -45,8 +47,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const clearCart = () => setCart([]);
 
+  const replaceCart = (items: CartItem[]) => {
+    setCart(items);
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, replaceCart }}>
       {children}
     </CartContext.Provider>
   );
